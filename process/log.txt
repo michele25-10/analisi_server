@@ -1,0 +1,2 @@
+07-12-2023 21:14:03 |: AVVIO ESEGUIBILE
+07-12-2023 21:14:03 |: ERRORE apertura file: /sys/class/thermal/thermal_zone0/temp
