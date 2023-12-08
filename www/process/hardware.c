@@ -48,14 +48,14 @@ float CPU_uso()
 
 float CPU_temp()
 {
-    float temp;
+    int temp;
     FILE *fp = fopen("/sys/class/thermal/thermal_zone0/temp", "r");
     if (!fp)
     {
         log_result("ERRORE apertura file: /sys/class/thermal/thermal_zone0/temp");
         return 0;
     }
-    fscanf(fp, "%2.f", &temp);
+    fscanf(fp, "%d", &temp);
     fclose(fp);
 
     return (float)temp / 1000.0;
@@ -78,7 +78,7 @@ void processi_pm2()
     char name[50];
     char status[20];
 
-    FILE *pm2 = popen("pm2 list | awk '{if(NR>2) print $4, $18}'", "r");
+    FILE *pm2 = popen("pm2 list | awk '{if(NR>3) print $4, $18}'", "r");
     if (!pm2)
     {
         log_result("ERRORE esecuzione seguente comando: \"pm2 list | awk '{if(NR>2) print $4, $18}'\"");

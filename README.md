@@ -11,7 +11,7 @@ La prima necessità è quella di far partire il file eseguibile nella cartella _
 
 ```cmd
 gcc -o hardware hardware.c
-./hardware &
+./hardware & > numero_processo.txt
 ```
 
 Seguentemente aprendo il file nella cartella _www/index.html_ sarà possibile visualizzare la pagina che mostra i dati.
