@@ -3,10 +3,16 @@
 Analisi_Server è un progetto web dinamico che consente di monitorare lo stato del nostro server.
 
 Momentaneamente il mio server gira su rete locale di conseguenza la pagina web che mostra i dati non necessita di un login; resta però da implementare nel caso futuro di installazione su macchine virtuali esposte in internet.
+Il sito funzionerà solo su macchine linux da momento che lo script di C lavora su directory delle distribuzioni linux e non windows.
 
 # Come avviare il progetto
 
 La prima necessità è quella di far partire il file eseguibile nella cartella _/process/hardware_ attraverso il seguente comando:
+
+```cmd
+gcc -o hardware hardware.c
+./hardware &
+```
 
 Seguentemente aprendo il file nella cartella _www/index.html_ sarà possibile visualizzare la pagina che mostra i dati.
 
@@ -48,10 +54,64 @@ Lo script _aggiornamento.php_ restituirà un body della pagina html e richiamer�
 
 Il sito sarà esposto attraverso nginx, per le sue egregie prestazioni in termini di esposizione di sevizi web.
 
+Installare nginx:
+
+```cmd
+sudo apt-get install php-fpm
+sudo apt-get install nginx
+systemctl status nginx
+systemctl enable nginx
+```
+
 La configurazione è la seguente, questo file andrà inserito in _/etc/nginx/sites-available/analisi_server_:
+
+```nginx
+server {
+        listen 80;  # Porta su cui il server ascolta le richieste HTTP
+
+        # Configurazioni aggiuntive, ad esempio:
+        root /home/sito/www;
+        index index.html;  # Pagina di default
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+}
+
+# server {
+#         listen 443 ssl;
+#         root /home/sito/www;
+#         index index.html;
+
+#         ssl_certificate /etc/nginx/ssl/certificate.crt;
+#         ssl_certificate_key /etc/nginx/ssl/private.key;
+
+#         location / {
+#                 try_files $uri $uri/ =404;
+#         }
+
+#}
+
+```
 
 Ricordati di modificare i permessi della directory indicata nella root attraverso i seguenti comandi:
 
+```cmd
+chmod -R o+rx /home/sito/
+sudo chmod -R o+rx /run/php
+
+```
+
 Il seguente file dopo essere stato creato andrà effettuato un link del file _/etc/nginx/sites-available/analisi_server_ in _/etc/nginx/sites-enable/analisi_server_
 
+```cmd
+ln -s /etc/nginx/sites-available/analisi_server /etc/nginx/sites-enabled
+```
+
 Elimina in enable il link default per non creare conflitti durante l'esposizione.
+
+Infine rilancia il servizio per visualizzare le modifiche online:
+
+```cmd
+sudo systemctl reload nginx
+```
