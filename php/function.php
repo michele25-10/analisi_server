@@ -20,7 +20,15 @@ function get($file)
 function getStat()
 {
     $file_path = '../process/stat.json';
-    return get($file_path);
+    $data = get($file_path);
+
+    $matches = explode('GB', $data["GB_usati"]);
+    $data["GB_usati"] = (float)$matches[0];
+
+    $matches = explode('GB', $data["GB_liberi"]);
+    $data["GB_liberi"] = (float)$matches[0];
+
+    return $data;
 }
 
 function getProcessiPm2()
@@ -29,14 +37,9 @@ function getProcessiPm2()
     return get($file_path);
 }
 
-function getPorteAttive()
+function getTxt($file)
 {
-
-    // Percorso del file di testo
-    $file_path = '../process/porte_attive.txt';
-
-    // Leggi il contenuto del file di testo
-    $file_lines = file($file_path, FILE_IGNORE_NEW_LINES);
+    $file_lines = file($file, FILE_IGNORE_NEW_LINES);
 
     if ($file_lines === false) {
         // Errore nella lettura del file
@@ -45,4 +48,18 @@ function getPorteAttive()
 
     // Ora puoi manipolare le righe come desiderato
     return $file_lines;
+}
+
+function getPorteAttive()
+{
+    // Percorso del file di testo
+    $file_path = '../process/porte_attive.txt';
+    return getTxt($file_path);
+}
+
+function getLog()
+{
+    // Percorso del file di testo
+    $file_path = '../process/log.txt';
+    return getTxt($file_path);
 }
