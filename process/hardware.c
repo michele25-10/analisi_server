@@ -157,7 +157,7 @@ int main()
 
         porte_ascolto();
 
-        log("Aggiornati file");
+        log_result("Aggiornati file");
 
         sleep(30);
     }
