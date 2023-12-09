@@ -22,7 +22,7 @@
   <script>
     function aggiornaContenuto() {
       $.ajax({
-        url: '../php/aggiornamento.php',
+        url: './php/aggiornamento.php',
         type: 'GET',
         success: function(data) {
           console.log("aggionrato");

@@ -61,5 +61,15 @@ function getLog()
 {
     // Percorso del file di testo
     $file_path = '../process/log.txt';
-    return getTxt($file_path);
+    $data = getTxt($file_path);
+
+    $newData[0] = $data[0];
+    $last10Data = array_slice($data, -10);
+    $count = 1;
+    for ($i = 0; $i < 10; $i++) {
+        $newData[$count] = $last10Data[$i];
+        $count++;
+    }
+
+    return $newData;
 }
