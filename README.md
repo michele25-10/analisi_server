@@ -10,8 +10,9 @@ Il sito funzionerà solo su macchine linux da momento che lo script di C lavora 
 La prima necessità è quella di far partire il file eseguibile nella cartella _/process/hardware_ attraverso il seguente comando:
 
 ```cmd
-gcc -o hardware hardware.c
-./hardware & > numero_processo.txt
+cd www/process/script
+sudo make
+sudo ../hardware & > numero_processo.txt
 ```
 
 Seguentemente aprendo il file nella cartella _www/index.html_ sarà possibile visualizzare la pagina che mostra i dati.
