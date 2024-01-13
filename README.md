@@ -116,3 +116,33 @@ Infine rilancia il servizio per visualizzare le modifiche online:
 ```cmd
 sudo systemctl reload nginx
 ```
+
+# Script per lanciare il servizio
+Crea un file contente questo pezzo di codice ovviamente modifica il percorso della directory con il percorso adeguato al tuo ambiente.
+
+Il file dovra essere di estensione ".sh", dopo aver salvato il file esegui il seguente comando per dare i permessi di esecuzione:
+
+```cmd
+sudo chmod +x nome_file.sh
+sudo ./nome_file.sh
+```
+
+```sh
+#!/bin/bash
+echo "script iniziato"
+
+#Percorso della directory contente il processo
+percorso="/home/sito/www/process/"
+
+cd "$percorso" || { echo "Errore nel cambio directory."; exit 1; }
+
+rm log.txt
+
+#Eseguo il processo in background
+./hardware &
+
+#riavvio nginx
+systemctl reload nginx
+
+echo "script terminato"
+```
