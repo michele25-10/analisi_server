@@ -34,7 +34,9 @@ function getStat()
 function getProcessiPm2()
 {
     $file_path = '../process/processi_pm2.json';
-    return get($file_path);
+    $data = get($file_path);
+    array_shift($data);
+    return (object) $data;
 }
 
 function getTxt($file)

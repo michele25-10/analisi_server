@@ -35,9 +35,9 @@ foreach ($processipm2 as $key => $value) {
                     <p>' . $key . ': ';
 
     if ($value == "online") {
-        $htmlString .= '<span class="text-success"> online</span>';
+        $htmlString .= '<span class="text-success"> <b>online</b></span>';
     } else {
-        $htmlString .= '<span class="text-danger"> ' . $value . '</span>';
+        $htmlString .= '<span class="text-danger"><b>' . $value . '</b></span>';
     }
 
     $htmlString .= '</p>
