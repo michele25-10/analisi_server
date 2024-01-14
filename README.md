@@ -5,6 +5,10 @@ Analisi_Server è un progetto web dinamico che consente di monitorare lo stato d
 Momentaneamente il mio server gira su rete locale di conseguenza la pagina web che mostra i dati non necessita di un login; resta però da implementare nel caso futuro di installazione su macchine virtuali esposte in internet.
 Il sito funzionerà solo su macchine linux da momento che lo script di C lavora su directory delle distribuzioni linux e non windows.
 
+# Interfaccia grafica
+
+![GUI](./docs/AnalisiServer.png)
+
 # Come avviare il progetto
 
 La prima necessità è quella di far partire il file eseguibile nella cartella _/process/hardware_ attraverso il seguente comando:
@@ -118,6 +122,7 @@ sudo systemctl reload nginx
 ```
 
 # Script per lanciare il servizio
+
 Crea un file contente questo pezzo di codice ovviamente modifica il percorso della directory con il percorso adeguato al tuo ambiente.
 
 Il file dovra essere di estensione ".sh", dopo aver salvato il file esegui il seguente comando per dare i permessi di esecuzione:
