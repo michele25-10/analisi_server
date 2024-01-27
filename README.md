@@ -68,34 +68,43 @@ systemctl status nginx
 systemctl enable nginx
 ```
 
+Generazione dei certificati ssl, ecco i comandi da eseguire:
+
+```cmd
+cd /etc/nginx/
+sudo mkdir ssl
+cd ssl
+sudo chmod 700 /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/[nome_chiave].key -out /etc/nginx/ssl/[nome-certificato].crt
+```
+
+Il certificato sarà valido per un anno.
+
 La configurazione è la seguente, questo file andrà inserito in _/etc/nginx/sites-available/analisi_server_:
 
 ```nginx
-server {
-        listen 80;  # Porta su cui il server ascolta le richieste HTTP
+server{
+    listen 443 ssl;
 
-        # Configurazioni aggiuntive, ad esempio:
+    ssl_certificate /etc/nginx/ssl/analisi_server.crt;
+    ssl_certificate_key /etc/nginx/ssl/analisi_server.key;
+
+    root /home/sito/www;
+    index index.php;
+
+    location / {
         root /home/sito/www;
-        index index.html;  # Pagina di default
+        index index.php;
+    }
 
-        location / {
-            try_files $uri $uri/ =404;
-        }
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
 }
 
-# server {
-#         listen 443 ssl;
-#         root /home/sito/www;
-#         index index.html;
-
-#         ssl_certificate /etc/nginx/ssl/certificate.crt;
-#         ssl_certificate_key /etc/nginx/ssl/private.key;
-
-#         location / {
-#                 try_files $uri $uri/ =404;
-#         }
-
-#}
 
 ```
 
@@ -118,7 +127,8 @@ Elimina in enable il link default per non creare conflitti durante l'esposizione
 Infine rilancia il servizio per visualizzare le modifiche online:
 
 ```cmd
-sudo systemctl reload nginx
+sudo nginx -t
+sudo nginx -s reload
 ```
 
 # Script per lanciare il servizio
